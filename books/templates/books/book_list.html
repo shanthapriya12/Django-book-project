@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Book List</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'books/style.css' %}">
+</head>
+
+<body>
+
+<h1>Book List</h1>
+
+
+{% if request.user.is_authenticated %}
+
+    <p>
+        Welcome, {{ request.user.username }}!
+    </p>
+
+    <a href="{% url 'books:logout' %}">
+        Logout
+    </a>
+
+    <br><br>
+
+    <a href="{% url 'books:add_book' %}">
+        Add New Book
+    </a>
+
+{% endif %}
+
+
+<hr>
+
+
+{% for book in page_obj %}
+
+    <h2>
+        {{ book.title }}
+    </h2>
+
+    <p>
+        Author: {{ book.author }}
+    </p>
+
+    <p>
+        Price: ${{ book.price }}
+    </p>
+
+    <p>
+        Category: {{ book.category }}
+    </p>
+
+
+    <a href="{% url 'books:book_detail' book.id %}">
+        View Details
+    </a>
+
+    <br><br>
+
+    <a href="{% url 'books:update_book' book.id %}">
+        Update
+    </a>
+
+    <br><br>
+
+    <a href="{% url 'books:delete_book' book.id %}">
+        Delete
+    </a>
+
+    <hr>
+
+{% empty %}
+
+    <p>
+        No books available.
+    </p>
+
+{% endfor %}
+<div>
+
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}">
+            Previous
+        </a>
+    {% endif %}
+
+
+    <span>
+        Page {{ page_obj.number }}
+        of {{ page_obj.paginator.num_pages }}
+    </span>
+
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}">
+            Next
+        </a>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
+<form method="GET">
+
+    <input
+        type="text"
+        name="q"
+        placeholder="Search books..."
+        value="{{ query|default:'' }}"
+    >
+
+    <button type="submit">
+        Search
+    </button>
+
+</form>

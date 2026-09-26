@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Book Details</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'books/style.css' %}">
+</head>
+
+<body>
+
+<h1>Book Details</h1>
+
+<h2>
+    {{ book.title }}
+</h2>
+
+<p>
+    Author: {{ book.author }}
+</p>
+
+<p>
+    Price: ${{ book.price }}
+</p>
+
+<p>
+    Category: {{ book.category }}
+</p>
+{% if book.cover %}
+
+    <img
+        src="{{ book.cover.url }}"
+        alt="{{ book.title }}"
+        width="200"
+    >
+
+{% endif %}
+<br>
+
+<a href="{% url 'books:update_book' book.id %}">
+    Update
+</a>
+
+<br><br>
+
+<a href="{% url 'books:delete_book' book.id %}">
+    Delete
+</a>
+
+<br><br>
+
+<a href="{% url 'books:book_list' %}">
+    Back to Book List
+</a>
+
+</body>
+
+</html>

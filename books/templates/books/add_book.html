@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Add Book</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'books/style.css' %}">
+</head>
+
+<body>
+
+<h1>Add New Book</h1>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">
+        Add Book
+    </button>
+
+</form>
+
+<br>
+
+<a href="{% url 'books:book_list' %}">
+    Back to Book List
+</a>
+
+</body>
+
+</html>
