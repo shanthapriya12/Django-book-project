@@ -1,16 +1,17 @@
-from django.http import request
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
+
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 
-import books
+from django.views.generic import DetailView, ListView
+
+from django.db.models import Q
 
 from .models import Book
 from .forms import BookForm
-from django.db.models import Q
 
 
 def login_view(request):
@@ -176,3 +177,20 @@ def delete_book(request, book_id):
     book.delete()
 
     return redirect('books:book_list')
+
+class BookListView(ListView):
+
+    model = Book
+
+    template_name = 'books/book_list.html'
+
+    context_object_name = 'books'
+
+
+class BookDetailView(DetailView):
+
+    model = Book
+
+    template_name = 'books/book_detail.html'
+
+    context_object_name = 'book'

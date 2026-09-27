@@ -1,16 +1,24 @@
 from django.db import models
-from django.views.generic import ListView
-from django.views.generic import DetailView
+
+
 class Category(models.Model):
+
     name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
 
+
 class Book(models.Model):
+
     title = models.CharField(max_length=200)
+
     author = models.CharField(max_length=100)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
+
+    price = models.DecimalField(
+        max_digits=6,
+        decimal_places=2
+    )
 
     category = models.ForeignKey(
         Category,
@@ -19,22 +27,12 @@ class Book(models.Model):
         blank=True,
         related_name='books'
     )
+
     cover = models.ImageField(
-    upload_to='books/',
-    blank=True,
-    null=True
-)
-class BookListView(ListView):
-    model = Book
-    template_name = 'books/book_list.html'
-    context_object_name = 'books'
+        upload_to='books/',
+        blank=True,
+        null=True
+    )
 
-class BookDetailView(DetailView):
-
-    model = Book
-
-    template_name = 'books/book_detail.html'
-
-    context_object_name = 'book'
-def __str__(self):
+    def __str__(self):
         return f"{self.title} by {self.author} - ${self.price}"
