@@ -1,6 +1,6 @@
 from django.urls import path
 
-from books.models import BookDetailView, BookListView
+
 
 from .views import (
     login_view,
@@ -59,14 +59,5 @@ urlpatterns = [
         delete_book,
         name='delete_book'
     ),
-    path(
-    'list/',
-    BookListView.as_view(),
-    name='book_list'
-),
-    path(
-    'detail/<int:pk>/',
-    BookDetailView.as_view(),
-    name='book_detail'
-)
+    
 ]
