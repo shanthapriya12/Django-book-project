@@ -49,10 +49,7 @@ def logout_view(request):
     return redirect('books:book_list')
 
 
-@permission_required(
-    'books.view_book',
-    raise_exception=True
-)
+
 def book_list(request):
 
     query = request.GET.get('q')
